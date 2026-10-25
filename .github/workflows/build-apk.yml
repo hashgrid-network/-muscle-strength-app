@@ -13,28 +13,55 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Accept Android Licenses
+      - name: Convert Web App to Android APK
         run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-
-      - name: Setup Gradle
-        run: |
-          if [ ! -f "gradlew" ]; then
-            gradle wrapper
+          # 1. Check index.html location
+          INDEX_PATH=$(find . -name "index.html" -not -path "*/node_modules/*" | head -n 1)
+          if [ -z "$INDEX_PATH" ]; then
+            echo "Error: index.html not found!"
+            exit 1
           fi
+          echo "Found index.html at $INDEX_PATH"
+
+          # 2. Setup packaging directory
+          mkdir -p www
+          cp "$INDEX_PATH" www/index.html
+
+          # 3. Install Capacitor
+          npm init -y
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+
+          # 4. Create App Configuration
+          cat << 'EOF' > capacitor.config.json
+          {
+            "appId": "com.musclestrength.app",
+            "appName": "Muscle & Strength",
+            "webDir": "www",
+            "server": {
+              "androidScheme": "https"
+            }
+          }
+          EOF
+
+          # 5. Build Android Project & Compile APK
+          npx cap add android
+          cd android
           chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
 
-      - name: Build Android APK
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
-
-      - name: Upload APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Muscle-Strength-India-APK
-          path: '**/build/outputs/apk/**/*.apk'
+          path: android/app/build/outputs/apk/debug/app-debug.apk
