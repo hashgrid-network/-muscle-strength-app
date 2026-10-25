@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Muscle & Strength India - Official Store & Shake Bar</title>
+  
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind Configuration for Themes -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+            },
+            darkBg: '#0A0D14',
+            darkCard: '#131822',
+            darkBorder: '#1E2638'
+          },
+          fontFamily: {
+            sans: ['Outfit', 'Noto Sans Devanagari', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Smooth transitions for theme toggle */
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 min-h-screen flex flex-col font-sans pb-24 selection:bg-gold-500 selection:text-black">
+
+  <!-- TOP PAN-INDIA COMPETITION BANNER (STICKY) -->
+  <div class="bg-gradient-to-r from-amber-600 via-gold-500 to-yellow-500 text-black px-3 py-2 text-xs md:text-sm font-bold flex items-center justify-between shadow-md sticky top-0 z-50">
+    <div class="flex items-center gap-2 overflow-hidden truncate">
+      <span class="bg-black text-gold-400 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider animate-pulse font-black">Live Arena</span>
+      <span id="topBannerText" class="truncate">🏆 वीकली पंजा चैलेंज & 5K रन | जीतो ₹15,000+ के Muscle & Strength इंडिया हैंपर्स!</span>
+    </div>
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <div id="countdownTimer" class="bg-black/80 text-gold-400 px-2 py-1 rounded text-[11px] font-mono">03d:14h:20m</div>
+      <button onclick="openArenaModal()" class="bg-black text-white hover:bg-neutral-800 text-[11px] px-2.5 py-1 rounded-full font-bold shadow transition">भाग लें</button>
+    </div>
+  </div>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="bg-white/95 dark:bg-darkCard/95 backdrop-blur border-b border-gray-200 dark:border-darkBorder sticky top-[37px] z-40 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      
+      <!-- Logo & Brand -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-black font-black text-xl shadow-lg shadow-gold-500/20">
+          MS
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-black text-base md:text-lg tracking-tight uppercase dark:text-white">Muscle & Strength</span>
+            <span class="bg-gold-500 text-black text-[9px] font-extrabold px-1.5 py-0.2 rounded">INDIA</span>
+          </div>
+          <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium">ऑथराइज्ड फ्रेंचाइजी & शेक बार</p>
+        </div>
+      </div>
+
+      <!-- Controls: Lang, Theme, Admin, Cart -->
+      <div class="flex items-center gap-2">
+        <!-- Language Switcher -->
+        <button onclick="toggleLanguage()" class="px-2 py-1 text-xs font-bold rounded-lg border border-gray-300 dark:border-darkBorder hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-1">
+          <span id="langFlag">🇮🇳</span> <span id="langLabel">हिं</span>
+        </button>
+
+        <!-- Dark/Light Theme Switcher -->
+        <button onclick="toggleTheme()" class="p-2 text-gray-700 dark:text-gold-400 rounded-lg border border-gray-300 dark:border-darkBorder hover:bg-gray-100 dark:hover:bg-gray-800">
+          <i data-lucide="moon" id="themeIcon" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Secret Admin Button -->
+        <button onclick="openAdminPrompt()" class="p-2 text-gray-400 hover:text-gold-500 rounded-lg">
+          <i data-lucide="shield-lock" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Cart Trigger -->
+        <button onclick="toggleCart()" class="relative bg-gold-500 text-black font-bold p-2 md:px-3 rounded-lg flex items-center gap-1.5 shadow-md">
+          <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+          <span id="cartCount" class="bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="max-w-6xl mx-auto px-4 py-4 w-full flex-1">
+    
+    <!-- NAVIGATION TABS -->
+    <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-4 text-xs font-bold">
+      <button onclick="switchTab('store')" id="tab-store" class="tab-btn px-4 py-2.5 rounded-xl bg-gold-500 text-black flex items-center gap-1.5 flex-shrink-0 shadow-sm">
+        <i data-lucide="package" class="w-4 h-4"></i> <span data-i18n="tab_store">सप्लीमेंट्स स्टोर</span>
+      </button>
+      <button onclick="switchTab('shakebar')" id="tab-shakebar" class="tab-btn px-4 py-2.5 rounded-xl bg-gray-200 dark:bg-darkCard text-gray-700 dark:text-gray-300 flex items-center gap-1.5 flex-shrink-0">
+        <i data-lucide="cup-soda" class="w-4 h-4"></i> <span data-i18n="tab_shakebar">डेली शेक बार</span>
+      </button>
+      <button onclick="switchTab('meter')" id="tab-meter" class="tab-btn px-4 py-2.5 rounded-xl bg-gray-200 dark:bg-darkCard text-gray-700 dark:text-gray-300 flex items-center gap-1.5 flex-shrink-0">
+        <i data-lucide="calculator" class="w-4 h-4"></i> <span data-i18n="tab_meter">हेल्थ & प्रोटीन मीटर</span>
+      </button>
+      <button onclick="switchTab('tracker')" id="tab-tracker" class="tab-btn px-4 py-2.5 rounded-xl bg-gray-200 dark:bg-darkCard text-gray-700 dark:text-gray-300 flex items-center gap-1.5 flex-shrink-0">
+        <i data-lucide="calendar-check" class="w-4 h-4"></i> <span data-i18n="tab_tracker">एथलीट डाइट ट्रैकर</span>
+      </button>
+    </div>
+
+    <!-- MODULE 1: STORE VIEW -->
+    <section id="module-store" class="space-y-6">
+      
+      <!-- Store Hero Banner -->
+      <div class="bg-gradient-to-r from-neutral-900 to-black text-white p-5 rounded-2xl border border-gold-500/30 relative overflow-hidden shadow-xl">
+        <div class="relative z-10 max-w-xl">
+          <div class="inline-flex items-center gap-1 bg-gold-500/20 text-gold-400 border border-gold-500/30 px-2 py-0.5 rounded text-[11px] font-bold mb-2">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 100% ऑरिजिनल फ्रेंचाइजी स्टॉक
+          </div>
+          <h1 class="text-2xl md:text-3xl font-black mb-2 text-white">Muscle & Strength India</h1>
+          <p class="text-xs md:text-sm text-gray-300 mb-4" data-i18n="hero_desc">
+            सीधे आधिकारिक आयातकों से सत्यापित डिब्बे, GST पक्का बिल, स्क्रैच क्यूआर कोड और फ्रेश स्टॉक गारंटी।
+          </p>
+          <div class="flex gap-2">
+            <button onclick="switchTab('shakebar')" class="bg-gold-500 hover:bg-gold-600 text-black text-xs font-bold px-4 py-2 rounded-lg transition">
+              🥤 शेक बार मेंबरशिप देखें
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex gap-2 overflow-x-auto hide-scrollbar text-xs font-semibold">
+        <button onclick="filterCategory('all')" class="cat-pill px-3 py-1.5 rounded-lg bg-gold-500 text-black">सभी</button>
+        <button onclick="filterCategory('Whey')" class="cat-pill px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-darkCard text-gray-700 dark:text-gray-300">Whey & Isolate</button>
+        <button onclick="filterCategory('Gainer')" class="cat-pill px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-darkCard text-gray-700 dark:text-gray-300">Mass Gainer</button>
+        <button onclick="filterCategory('Creatine')" class="cat-pill px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-darkCard text-gray-700 dark:text-gray-300">Creatine</button>
+        <button onclick="filterCategory('PreWorkout')" class="cat-pill px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-darkCard text-gray-700 dark:text-gray-300">Pre-Workout</button>
+        <button onclick="filterCategory('Wellness')" class="cat-pill px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-darkCard text-gray-700 dark:text-gray-300">Vitamins & BCAA</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Rendered dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- MODULE 2: SHAKE BAR VIEW -->
+    <section id="module-shakebar" class="space-y-6 hidden">
+      <div class="bg-gradient-to-r from-amber-500/10 via-amber-600/5 to-transparent border border-gold-500/30 p-5 rounded-2xl">
+        <div class="max-w-2xl">
+          <span class="bg-gold-500 text-black text-[10px] font-black px-2 py-0.5 rounded uppercase">No ₹10,000 Upfront Needed</span>
+          <h2 class="text-xl md:text-2xl font-black mt-2">डेली फ्रेश प्रोटीन शेक बार 🥤</h2>
+          <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">
+            एक साथ 8-10 हजार का डिब्बा नहीं ले सकते? कोई बात नहीं। हमारे स्टोर पर रोज़ आएं और अपने सामने शुद्ध Muscle & Strength India व्हे प्रोटीन का फ्रेश शेक पिएं।
+          </p>
+          <div class="mt-3 flex items-center gap-3 text-xs text-gold-600 dark:text-gold-400 font-bold">
+            <span>✓ ओपन स्कूप गारंटी</span>
+            <span>✓ 26g - 35g प्रोटीन प्रति ग्लास</span>
+            <span>✓ 0% मिलावट</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shake Passes Grid -->
+      <h3 class="font-bold text-base">मेंबरशिप पासेस (किफायती सब्सक्रिप्शन)</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <div class="bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder p-4 rounded-xl relative shadow-sm">
+          <h4 class="font-bold text-sm">सिंगल वॉक-इन कप</h4>
+          <p class="text-xs text-gray-500">1 दिन का फ्रेश शेक</p>
+          <div class="text-2xl font-black text-gold-500 my-2">₹199 <span class="text-xs text-gray-400 font-normal">/ कप</span></div>
+          <p class="text-[11px] text-gray-600 dark:text-gray-400 mb-4">जिम के बाद तुरंत स्टोर पर आएं और 26g प्रोटीन शेक पिएं।</p>
+          <button onclick="addToCartShake('सिंगल शेक पास', 199, '1 Cup')" class="w-full py-2 bg-gray-200 dark:bg-gray-800 hover:bg-gold-500 hover:text-black font-bold text-xs rounded-lg transition">पास बुक करें</button>
+        </div>
+
+        <div class="bg-white dark:bg-darkCard border-2 border-gold-500 p-4 rounded-xl relative shadow-md">
+          <span class="absolute -top-2.5 right-3 bg-gold-500 text-black text-[9px] font-black px-2 py-0.5 rounded-full">POPULAR</span>
+          <h4 class="font-bold text-sm">6-डे वीकली पास</h4>
+          <p class="text-xs text-gray-500">सोमवार से शनिवार</p>
+          <div class="text-2xl font-black text-gold-500 my-2">₹1,099 <span class="text-xs text-gray-400 font-normal">(₹183 / दिन)</span></div>
+          <p class="text-[11px] text-gray-600 dark:text-gray-400 mb-4">पूरे हफ्ते का पोस्ट-वर्कआउट न्यूट्रिशन फिक्स। बचत: ₹95।</p>
+          <button onclick="addToCartShake('6-डे वीकली पास', 1099, '6 Days')" class="w-full py-2 bg-gold-500 text-black font-bold text-xs rounded-lg hover:bg-gold-600 transition">वीकली पास लें</button>
+        </div>
+
+        <div class="bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder p-4 rounded-xl relative shadow-sm">
+          <h4 class="font-bold text-sm">26-डे मंथली प्रो पास</h4>
+          <p class="text-xs text-gray-500">महीने के पूरे 26 वर्कआउट दिन</p>
+          <div class="text-2xl font-black text-gold-500 my-2">₹4,299 <span class="text-xs text-gray-400 font-normal">(₹165 / दिन)</span></div>
+          <p class="text-[11px] text-gray-600 dark:text-gray-400 mb-4">🎁 साथ में 1 फ्री शेकर बॉटल + पर्सनलाइज्ड डाइट प्लान फ्री।</p>
+          <button onclick="addToCartShake('26-डे मंथली प्रो पास', 4299, '26 Days + Shaker')" class="w-full py-2 bg-gray-200 dark:bg-gray-800 hover:bg-gold-500 hover:text-black font-bold text-xs rounded-lg transition">मंथली पास लें</button>
+        </div>
+
+      </div>
+
+      <!-- Fresh Shake Menu -->
+      <h3 class="font-bold text-base mt-6">सिग्नेचर फ्रेश स्मूदी & शेक्स</h3>
+      <div id="shakeMenuGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- MODULE 3: HEALTH & PROTEIN METER -->
+    <section id="module-meter" class="space-y-6 hidden">
+      <div class="bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder p-5 rounded-2xl shadow-sm">
+        <h2 class="text-lg md:text-xl font-bold mb-1">एथलीट हेल्थ, कैलोरी & प्रोटीन कैलकुलेटर</h2>
+        <p class="text-xs text-gray-500 mb-4">अपने शरीर के अनुसार सटीक प्रोटीन और सप्लीमेंट प्लान जानें।</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs mb-4">
+          <div>
+            <label class="block text-gray-500 mb-1">लिंग (Gender)</label>
+            <select id="calcGender" class="w-full p-2 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder">
+              <option value="male">पुरुष (Male)</option>
+              <option value="female">महिला (Female)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-500 mb-1">उम्र (Age)</label>
+            <input type="number" id="calcAge" value="25" class="w-full p-2 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+          </div>
+          <div>
+            <label class="block text-gray-500 mb-1">वजन (Weight in KG)</label>
+            <input type="number" id="calcWeight" value="70" class="w-full p-2 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+          </div>
+          <div>
+            <label class="block text-gray-500 mb-1">हाइट (Height in CM)</label>
+            <input type="number" id="calcHeight" value="175" class="w-full p-2 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+          </div>
+        </div>
+
+        <div class="mb-4 text-xs">
+          <label class="block text-gray-500 mb-1">आपका फिटनेस लक्ष्य (Goal)</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="setGoal('cut')" id="goal-cut" class="goal-btn py-2 border rounded-lg font-bold border-gray-300 dark:border-darkBorder">फैट लॉस / कटिंग</button>
+            <button type="button" onclick="setGoal('lean')" id="goal-lean" class="goal-btn py-2 border rounded-lg font-bold border-gold-500 bg-gold-500/10 text-gold-500">लीन मसल गेन</button>
+            <button type="button" onclick="setGoal('bulk')" id="goal-bulk" class="goal-btn py-2 border rounded-lg font-bold border-gray-300 dark:border-darkBorder">वजन बढ़ाना (Bulk)</button>
+          </div>
+        </div>
+
+        <button onclick="calculateMacros()" class="w-full py-2.5 bg-gold-500 hover:bg-gold-600 text-black font-extrabold text-sm rounded-xl shadow-md transition">
+          रिजल्ट निकालें (Calculate Needs)
+        </button>
+
+        <!-- Calculation Result Box -->
+        <div id="calcResultBox" class="mt-5 p-4 rounded-xl bg-gray-100 dark:bg-neutral-900 border border-gold-500/40 hidden">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center mb-4">
+            <div class="bg-white dark:bg-darkCard p-2.5 rounded-lg border border-gray-200 dark:border-darkBorder">
+              <span class="text-[10px] text-gray-500 uppercase block">Daily Calories</span>
+              <span id="resCalories" class="text-lg font-black text-gold-500">2,450 kcal</span>
+            </div>
+            <div class="bg-white dark:bg-darkCard p-2.5 rounded-lg border border-gray-200 dark:border-darkBorder">
+              <span class="text-[10px] text-gray-500 uppercase block">Daily Protein</span>
+              <span id="resProtein" class="text-lg font-black text-emerald-500">140g</span>
+            </div>
+            <div class="bg-white dark:bg-darkCard p-2.5 rounded-lg border border-gray-200 dark:border-darkBorder">
+              <span class="text-[10px] text-gray-500 uppercase block">Carbs</span>
+              <span id="resCarbs" class="text-lg font-black text-blue-500">260g</span>
+            </div>
+            <div class="bg-white dark:bg-darkCard p-2.5 rounded-lg border border-gray-200 dark:border-darkBorder">
+              <span class="text-[10px] text-gray-500 uppercase block">Fats</span>
+              <span id="resFats" class="text-lg font-black text-rose-500">60g</span>
+            </div>
+          </div>
+
+          <!-- Recommended Stack -->
+          <div class="border-t border-gray-300 dark:border-darkBorder pt-3">
+            <h4 class="text-xs font-bold mb-2 flex items-center gap-1.5 text-gold-500">
+              <i data-lucide="zap" class="w-4 h-4"></i> आपके लक्ष्य के लिए अनुशंसित Muscle & Strength सप्लीमेंट स्टैक:
+            </h4>
+            <div id="recommendedStackContent" class="text-xs text-gray-700 dark:text-gray-300 space-y-1">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MODULE 4: ATHLETE DIET TRACKER -->
+    <section id="module-tracker" class="space-y-6 hidden">
+      
+      <!-- Daily Tracker Header -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Hydration Counter -->
+        <div class="bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder p-4 rounded-xl">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="font-bold text-sm flex items-center gap-1.5 text-blue-500">
+              <i data-lucide="droplet" class="w-4 h-4"></i> दैनिक पानी का स्तर (Water Target: 3.5L)
+            </h4>
+            <span id="waterCountText" class="font-mono text-xs font-bold">1.5 / 3.5 Litre</span>
+          </div>
+          <div class="w-full bg-gray-200 dark:bg-gray-800 h-3 rounded-full overflow-hidden mb-3">
+            <div id="waterProgressBar" class="bg-blue-500 h-full transition-all duration-300" style="width: 42%;"></div>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="addWater(250)" class="flex-1 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 text-xs font-bold rounded-lg">+ 1 ग्लास (250ml)</button>
+            <button onclick="resetWater()" class="px-3 py-1.5 bg-gray-200 dark:bg-gray-800 text-xs rounded-lg font-bold">रीसेट</button>
+          </div>
+        </div>
+
+        <!-- Daily Habit Checklist -->
+        <div class="bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder p-4 rounded-xl">
+          <h4 class="font-bold text-sm mb-2 flex items-center gap-1.5 text-gold-500">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> आज का एथलीट रूटीन चेकलिस्ट
+          </h4>
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="chk-workout" onchange="saveHabits()" class="rounded text-gold-500 focus:ring-0 w-4 h-4" />
+              <span>आज की जिम ट्रेनिंग पूरी हुई</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="chk-shake" onchange="saveHabits()" class="rounded text-gold-500 focus:ring-0 w-4 h-4" />
+              <span>पोस्ट-वर्कआउट शेक / व्हे प्रोटीन लिया</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="chk-diet" onchange="saveHabits()" class="rounded text-gold-500 focus:ring-0 w-4 h-4" />
+              <span>डाइट अनुसार पूरा प्रोटीन व भोजन लिया</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Meal Timetable (Veg vs Non-Veg Switch) -->
+      <div class="bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder p-4 rounded-xl">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-sm">एथलीट दैनिक डाइट चार्ट (Nutrition Plan)</h3>
+          <div class="flex gap-1 text-xs">
+            <button onclick="switchDietType('veg')" id="diet-veg-btn" class="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold">वेज (Veg)</button>
+            <button onclick="switchDietType('nonveg')" id="diet-nonveg-btn" class="px-2.5 py-1 rounded bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold">नॉन-वेज</button>
+          </div>
+        </div>
+        <div id="dietPlanContainer" class="space-y-3 text-xs">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ARENA REGISTRATION & INFO MODAL -->
+  <div id="arenaModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder max-w-md w-full rounded-2xl p-5 overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-black text-lg text-gold-500">🏆 एथलीट एरीना चैलेंज रजिस्ट्रेशन</h3>
+        <button onclick="closeArenaModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">
+        Muscle & Strength India द्वारा प्रायोजित आगामी संडे ओपन पंजा कुश्ती & 5K स्प्रिंट चैलेंज।
+      </p>
+
+      <form onsubmit="handleArenaRegister(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-gray-500 mb-1">पूरा नाम (Full Name)</label>
+          <input type="text" id="arenaName" required placeholder="उदा. राहुल गिल" class="w-full p-2.5 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+        </div>
+        <div>
+          <label class="block text-gray-500 mb-1">व्हाट्सएप नंबर (WhatsApp No.)</label>
+          <input type="tel" id="arenaPhone" required placeholder="98XXXXXXXX" class="w-full p-2.5 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+        </div>
+        <div>
+          <label class="block text-gray-500 mb-1">चैलेंज चुनें (Event)</label>
+          <select id="arenaEvent" class="w-full p-2.5 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder">
+            <option value="Panja_Under70">ओपन पंजा कुश्ती (Under 70 KG)</option>
+            <option value="Panja_Open">ओपन पंजा कुश्ती (Heavyweight Open)</option>
+            <option value="5K_Run">5K सिटी मैराथन & स्प्रिंट</option>
+            <option value="Max_Deadlift">1v1 डेडलिफ्ट बैटल</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-500 mb-1">इंस्टाग्राम आईडी (@handle - ऑप्शनल)</label>
+          <input type="text" id="arenaInsta" placeholder="@your_instagram" class="w-full p-2.5 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-gold-500 text-black font-extrabold text-sm rounded-xl mt-2 shadow-lg">
+          फ्री एंट्री पास पाएं (Get Athlete Pass)
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SLIDE-OVER SHOPPING CART DRAWER -->
+  <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full max-w-sm bg-white dark:bg-darkCard border-l border-gray-200 dark:border-darkBorder z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+    <div class="p-4 border-b border-gray-200 dark:border-darkBorder flex items-center justify-between">
+      <h3 class="font-bold text-base flex items-center gap-2">
+        <i data-lucide="shopping-bag" class="w-5 h-5 text-gold-500"></i> आपकी कार्ट (Your Cart)
+      </h3>
+      <button onclick="toggleCart()" class="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+
+    <!-- Cart Items List -->
+    <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3">
+      <!-- Rendered via JS -->
+    </div>
+
+    <!-- Cart Footer & WhatsApp Checkout -->
+    <div class="p-4 border-t border-gray-200 dark:border-darkBorder bg-gray-50 dark:bg-neutral-900 space-y-3">
+      <div class="flex justify-between items-center text-sm font-bold">
+        <span>कुल राशि (Total Amount):</span>
+        <span id="cartTotalPrice" class="text-gold-500 text-lg font-black">₹0</span>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <input type="text" id="custName" placeholder="आपका नाम (Customer Name)" class="w-full p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+        <input type="tel" id="custPhone" placeholder="मोबाइल नंबर (WhatsApp Phone)" class="w-full p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+        <select id="custDelivery" class="w-full p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-darkBorder">
+          <option value="Store Pickup">स्टोर से पिकअप (Self Pickup)</option>
+          <option value="Home Delivery">होम डिलीवरी (Same Day Delivery)</option>
+        </select>
+      </div>
+
+      <button onclick="processWhatsAppCheckout()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-xl flex items-center justify-center gap-2 shadow-lg transition">
+        <i data-lucide="message-circle" class="w-5 h-5"></i> WhatsApp पर ऑर्डर भेजें
+      </button>
+    </div>
+  </div>
+
+  <!-- ADMIN INVENTORY & CRM MODAL -->
+  <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder max-w-2xl w-full rounded-2xl p-5 overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between mb-4 border-b border-gray-200 dark:border-darkBorder pb-2">
+        <div>
+          <h3 class="font-black text-lg text-gold-500">🔒 स्टोर ओनर एडमिन डैशबोर्ड</h3>
+          <p class="text-xs text-gray-500">स्टॉक, शेक रेट और ऑफर सीधे मैनेज करें</p>
+        </div>
+        <button onclick="closeAdminModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <!-- Add Product Form -->
+      <form onsubmit="handleAdminAddProduct(event)" class="space-y-3 text-xs mb-6 bg-gray-50 dark:bg-neutral-900 p-3 rounded-xl border border-gray-200 dark:border-darkBorder">
+        <h4 class="font-bold text-sm text-gold-500">+ नया सप्लीमेंट जोड़ें</h4>
+        <div class="grid grid-cols-2 gap-2">
+          <input type="text" id="admProdName" required placeholder="Product Name" class="p-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+          <select id="admCategory" class="p-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-darkBorder">
+            <option value="Whey">Whey & Isolate</option>
+            <option value="Gainer">Mass Gainer</option>
+            <option value="Creatine">Creatine</option>
+            <option value="PreWorkout">Pre-Workout</option>
+            <option value="Wellness">Wellness / BCAA</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <input type="number" id="admPrice" required placeholder="Offer Price (₹)" class="p-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+          <input type="number" id="admMrp" required placeholder="MRP (₹)" class="p-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+          <input type="text" id="admSizes" placeholder="Sizes (e.g. 1kg, 2kg)" class="p-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-darkBorder" />
+        </div>
+        <button type="submit" class="w-full py-2 bg-gold-500 text-black font-bold rounded-lg">+ सप्लीमेंट लाइव करें</button>
+      </form>
+
+      <!-- Manage Existing Products -->
+      <h4 class="font-bold text-sm mb-2">वर्तमान स्टॉक प्रबंधन</h4>
+      <div id="adminStockList" class="space-y-2 text-xs">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FIXED BOTTOM NAVIGATION BAR (MOBILE) -->
+  <nav class="fixed bottom-0 inset-x-0 bg-white/95 dark:bg-darkCard/95 backdrop-blur border-t border-gray-200 dark:border-darkBorder z-40 py-2 transition-colors">
+    <div class="max-w-md mx-auto px-4 flex justify-around text-center">
+      <button onclick="switchTab('store')" class="text-gold-500 flex flex-col items-center">
+        <i data-lucide="package" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold mt-0.5" data-i18n="nav_store">स्टोर</span>
+      </button>
+      <button onclick="switchTab('shakebar')" class="text-gray-400 hover:text-gold-500 flex flex-col items-center">
+        <i data-lucide="cup-soda" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold mt-0.5" data-i18n="nav_shakes">शेक बार</span>
+      </button>
+      <button onclick="switchTab('meter')" class="text-gray-400 hover:text-gold-500 flex flex-col items-center">
+        <i data-lucide="calculator" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold mt-0.5" data-i18n="nav_macros">कैलकुलेटर</span>
+      </button>
+      <button onclick="switchTab('tracker')" class="text-gray-400 hover:text-gold-500 flex flex-col items-center">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold mt-0.5" data-i18n="nav_diet">डाइट</span>
+      </button>
+      <button onclick="toggleCart()" class="text-gray-400 hover:text-gold-500 flex flex-col items-center relative">
+        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold mt-0.5" data-i18n="nav_cart">कार्ट</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // 1. STATE & DATA INITIALIZATION
+    const STORE_WHATSAPP = "919876543210"; // अपने स्टोर का WhatsApp नंबर यहाँ डालें
+    let currentLang = 'hi';
+    let currentTheme = 'dark';
+    let currentGoal = 'lean';
+    let currentDietType = 'veg';
+    let waterConsumedMl = 1500;
+
+    // Muscle & Strength India Exclusive Products Catalog
+    const defaultProducts = [
+      {
+        id: "msi-1",
+        name: "Muscle & Strength India - 100% Bio-Whey Isolate",
+        category: "Whey",
+        sizes: ["1 kg", "2 kg"],
+        flavors: ["Rich Chocolate", "Kulfi Malai", "Cafe Mocha"],
+        price: 3499,
+        mrp: 4199,
+        inStock: true,
+        tag: "Bestseller"
+      },
+      {
+        id: "msi-2",
+        name: "Muscle & Strength India - Ultra Mega Mass Gainer",
+        category: "Gainer",
+        sizes: ["1 kg", "3 kg", "5 kg"],
+        flavors: ["Belgian Chocolate", "Banana Cream"],
+        price: 2499,
+        mrp: 3199,
+        inStock: true,
+        tag: "Mass Gain"
+      },
+      {
+        id: "msi-3",
+        name: "Muscle & Strength India - Micronized Creapure Creatine",
+        category: "Creatine",
+        sizes: ["100g", "250g"],
+        flavors: ["Unflavored", "Fruit Punch"],
+        price: 999,
+        mrp: 1399,
+        inStock: true,
+        tag: "Pure Strength"
+      },
+      {
+        id: "msi-4",
+        name: "Muscle & Strength India - Nitric Surge Pre-Workout Igniter",
+        category: "PreWorkout",
+        sizes: ["300g (30 Servings)"],
+        flavors: ["Green Apple", "Tangy Orange"],
+        price: 1699,
+        mrp: 2299,
+        inStock: true,
+        tag: "Insane Energy"
+      },
+      {
+        id: "msi-5",
+        name: "Muscle & Strength India - Pro BCAA + EAA Intra-Workout",
+        category: "Wellness",
+        sizes: ["400g"],
+        flavors: ["Blue Raz", "Watermelon"],
+        price: 1499,
+        mrp: 1999,
+        inStock: true,
+        tag: "Fast Recovery"
+      },
+      {
+        id: "msi-6",
+        name: "Muscle & Strength India - Daily Multi-Vitamins + Fish Oil",
+        category: "Wellness",
+        sizes: ["60 Tablets"],
+        flavors: ["Standard"],
+        price: 799,
+        mrp: 1099,
+        inStock: true,
+        tag: "Immunity"
+      }
+    ];
+
+    const shakeMenu = [
+      { id: "shk-1", name: "द मसल बीस्ट शेक", protein: "35g Protein", price: 220, desc: "Muscle & Strength India Whey + पीनट बटर + ओट्स + केला" },
+      { id: "shk-2", name: "प्योर लीन शेक (Zero Sugar)", protein: "27g Isolate", price: 190, desc: "Muscle & Strength Isolate + चिया सीड्स + स्किम्ड मिल्क" },
+      { id: "shk-3", name: "पोस्ट-वर्कआउट रिकवरी पंच", protein: "30g Blend", price: 210, desc: "Whey + 3g Creatine + BCAA इलेक्ट्रोलाइट्स" }
+    ];
+
+    // Local Storage / State Sync
+    let products = JSON.parse(localStorage.getItem('msi_products')) || defaultProducts;
+    let cart = JSON.parse(localStorage.getItem('msi_cart')) || [];
+
+    // 2. THEME CONTROLLER
+    function toggleTheme() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        currentTheme = 'light';
+        document.getElementById('themeIcon').setAttribute('data-lucide', 'sun');
+      } else {
+        html.classList.add('dark');
+        currentTheme = 'dark';
+        document.getElementById('themeIcon').setAttribute('data-lucide', 'moon');
+      }
+      lucide.createIcons();
+      localStorage.setItem('msi_theme', currentTheme);
+    }
+
+    // 3. LANGUAGE TOGGLE (HINDI / ENGLISH)
+    const translations = {
+      hi: {
+        tab_store: "सप्लीमेंट्स स्टोर",
+        tab_shakebar: "डेली शेक बार",
+        tab_meter: "हेल्थ & प्रोटीन मीटर",
+        tab_tracker: "एथलीट डाइट ट्रैकर",
+        nav_store: "स्टोर",
+        nav_shakes: "शेक बार",
+        nav_macros: "कैलकुलेटर",
+        nav_diet: "डाइट",
+        nav_cart: "कार्ट"
+      },
+      en: {
+        tab_store: "Supplements Store",
+        tab_shakebar: "Daily Shake Bar",
+        tab_meter: "Health & Protein Meter",
+        tab_tracker: "Athlete Routine & Diet",
+        nav_store: "Store",
+        nav_shakes: "Shake Bar",
+        nav_macros: "Calculator",
+        nav_diet: "Diet",
+        nav_cart: "Cart"
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'hi' ? 'en' : 'hi';
+      document.getElementById('langFlag').innerText = currentLang === 'hi' ? '🇮🇳' : '🇺🇸';
+      document.getElementById('langLabel').innerText = currentLang === 'hi' ? 'हिं' : 'EN';
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+          el.innerText = translations[currentLang][key];
+        }
+      });
+    }
+
+    // 4. TAB CONTROLLER
+    function switchTab(tabId) {
+      ['store', 'shakebar', 'meter', 'tracker'].forEach(id => {
+        document.getElementById(`module-${id}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-${id}`);
+        if (btn) {
+          btn.classList.remove('bg-gold-500', 'text-black');
+          btn.classList.add('bg-gray-200', 'dark:bg-darkCard', 'text-gray-700', 'dark:text-gray-300');
+        }
+      });
+      document.getElementById(`module-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-gold-500', 'text-black');
+        activeBtn.classList.remove('bg-gray-200', 'dark:bg-darkCard', 'text-gray-700', 'dark:text-gray-300');
+      }
+    }
+
+    // 5. RENDER PRODUCTS
+    function renderProducts(items = products) {
+      const container = document.getElementById('productsGrid');
+      container.innerHTML = '';
+
+      items.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder p-4 rounded-xl flex flex-col justify-between shadow-sm hover:border-gold-500/50 transition";
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-gold-500 border border-gold-500/30">${p.tag || 'Official Stock'}</span>
+              <span class="text-[10px] ${p.inStock ? 'text-emerald-500 font-bold' : 'text-rose-500 font-bold'}">
+                ${p.inStock ? '● इन स्टॉक' : 'खत्म हो गया'}
+              </span>
+            </div>
+            <h4 class="font-bold text-sm leading-snug mb-1 text-gray-900 dark:text-white">${p.name}</h4>
+            <div class="flex items-center gap-1.5 text-xs mb-3">
+              <span class="font-black text-gold-500 text-base">₹${p.price}</span>
+              <span class="line-through text-gray-400 text-xs">₹${p.mrp}</span>
+              <span class="text-emerald-600 dark:text-emerald-400 text-[10px] font-bold">बचत ₹${p.mrp - p.price}</span>
+            </div>
+            <div class="space-y-1.5 mb-3 text-xs">
+              <select id="size-${p.id}" class="w-full p-1.5 rounded bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder text-xs">
+                ${p.sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
+              </select>
+              <select id="flavor-${p.id}" class="w-full p-1.5 rounded bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-darkBorder text-xs">
+                ${p.flavors.map(f => `<option value="${f}">${f}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <button onclick="addToCartProduct('${p.id}')" ${!p.inStock ? 'disabled' : ''} class="w-full py-2 bg-gold-500 hover:bg-gold-600 disabled:bg-gray-400 text-black font-extrabold text-xs rounded-lg transition shadow">
+            + कार्ट में जोड़ें (Add to Cart)
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterCategory(cat) {
+      if (cat === 'all') renderProducts(products);
+      else renderProducts(products.filter(p => p.category === cat));
+    }
+
+    // 6. RENDER SHAKE BAR MENU
+    function renderShakeMenu() {
+      const container = document.getElementById('shakeMenuGrid');
+      container.innerHTML = '';
+      shakeMenu.forEach(s => {
+        const item = document.createElement('div');
+        item.className = "bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder p-3 rounded-xl flex items-center justify-between";
+        item.innerHTML = `
+          <div>
+            <span class="bg-blue-500/10 text-blue-500 text-[10px] font-bold px-1.5 py-0.2 rounded">${s.protein}</span>
+            <h4 class="font-bold text-sm mt-1 text-gray-900 dark:text-white">${s.name}</h4>
+            <p class="text-[11px] text-gray-500">${s.desc}</p>
+          </div>
+          <div class="text-right flex-shrink-0 ml-2">
+            <span class="block font-black text-gold-500 text-base mb-1">₹${s.price}</span>
+            <button onclick="addToCartShake('${s.name}', ${s.price}, '1 Cup')" class="bg-gold-500 text-black text-[11px] font-bold px-3 py-1 rounded-lg">ऑर्डर करें</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    // 7. CART SYSTEM & WHATSAPP CHECKOUT
+    function addToCartProduct(prodId) {
+      const prod = products.find(p => p.id === prodId);
+      const chosenSize = document.getElementById(`size-${prodId}`).value;
+      const chosenFlavor = document.getElementById(`flavor-${prodId}`).value;
+
+      cart.push({
+        name: prod.name,
+        details: `${chosenSize} | ${chosenFlavor}`,
+        price: prod.price
+      });
+      updateCartUI();
+      toggleCart(true);
+    }
+
+    function addToCartShake(name, price, details) {
+      cart.push({ name, details, price });
+      updateCartUI();
+      toggleCart(true);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      localStorage.setItem('msi_cart', JSON.stringify(cart));
+      document.getElementById('cartCount').innerText = cart.length;
+      const list = document.getElementById('cartItemsList');
+      list.innerHTML = '';
+
+      let total = 0;
+      if (cart.length === 0) {
+        list.innerHTML = `<p class="text-xs text-gray-400 text-center py-8">आपकी कार्ट खाली है।</p>`;
+      } else {
+        cart.forEach((item, idx) => {
+          total += item.price;
+          const el = document.createElement('div');
+          el.className = "flex items-center justify-between bg-gray-50 dark:bg-neutral-800 p-2.5 rounded-lg text-xs";
+          el.innerHTML = `
+            <div>
+              <div class="font-bold text-gray-900 dark:text-white">${item.name}</div>
+              <div class="text-[10px] text-gray-500">${item.details}</div>
+              <div class="font-bold text-gold-500 mt-0.5">₹${item.price}</div>
+            </div>
+            <button onclick="removeFromCart(${idx})" class="text-rose-500 font-bold p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+          `;
+          list.appendChild(el);
+        });
+      }
+      document.getElementById('cartTotalPrice').innerText = `₹${total}`;
+      lucide.createIcons();
+    }
+
+    function toggleCart(forceOpen = false) {
+      const drawer = document.getElementById('cartDrawer');
+      if (forceOpen || drawer.classList.contains('translate-x-full')) {
+        drawer.classList.remove('translate-x-full');
+      } else {
+        drawer.classList.add('translate-x-full');
+      }
+    }
+
+    function processWhatsAppCheckout() {
+      if (cart.length === 0) {
+        alert("कृपया पहले कार्ट में कुछ सप्लीमेंट या शेक पास जोड़ें!");
+        return;
+      }
+      const name = document.getElementById('custName').value.trim() || 'Customer';
+      const phone = document.getElementById('custPhone').value.trim() || 'N/A';
+      const delivery = document.getElementById('custDelivery').value;
+
+      let billText = `🏋️ *Muscle & Strength India - नया ऑर्डर*\n`;
+      billText += `--------------------------------\n`;
+      billText += `👤 ग्राहक: ${name} (${phone})\n`;
+      billText += `📦 प्रकार: ${delivery}\n`;
+      billText += `--------------------------------\n`;
+      
+      let grandTotal = 0;
+      cart.forEach((item, i) => {
+        billText += `${i + 1}. ${item.name} (${item.details}) - ₹${item.price}\n`;
+        grandTotal += item.price;
+      });
+
+      billText += `--------------------------------\n`;
+      billText += `💰 *कुल राशि: ₹${grandTotal}*\n\n`;
+      billText += `कृपया मेरा ऑर्डर कन्फर्म करें और उपलब्धता बताएं।`;
+
+      const waUrl = `https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(billText)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    // 8. HEALTH & MACRO CALCULATOR LOGIC
+    function setGoal(goal) {
+      currentGoal = goal;
+      document.querySelectorAll('.goal-btn').forEach(btn => {
+        btn.classList.remove('border-gold-500', 'bg-gold-500/10', 'text-gold-500');
+        btn.classList.add('border-gray-300', 'dark:border-darkBorder');
+      });
+      document.getElementById(`goal-${goal}`).classList.add('border-gold-500', 'bg-gold-500/10', 'text-gold-500');
+    }
+
+    function calculateMacros() {
+      const weight = parseFloat(document.getElementById('calcWeight').value) || 70;
+      const height = parseFloat(document.getElementById('calcHeight').value) || 175;
+      const age = parseFloat(document.getElementById('calcAge').value) || 25;
+      const gender = document.getElementById('calcGender').value;
+
+      // Mifflin-St Jeor Formula
+      let bmr = (10 * weight) + (6.25 * height) - (5 * age);
+      bmr = (gender === 'male') ? bmr + 5 : bmr - 161;
+      let tdee = bmr * 1.45; // Moderate gym activity
+
+      let targetCalories = Math.round(tdee);
+      let targetProtein = Math.round(weight * 2.0); // 2g per kg
+
+      if (currentGoal === 'cut') {
+        targetCalories = Math.round(tdee - 450);
+        targetProtein = Math.round(weight * 2.2);
+      } else if (currentGoal === 'bulk') {
+        targetCalories = Math.round(tdee + 450);
+        targetProtein = Math.round(weight * 1.8);
+      }
+
+      const targetFats = Math.round((targetCalories * 0.25) / 9);
+      const targetCarbs = Math.round((targetCalories - (targetProtein * 4) - (targetFats * 9)) / 4);
+
+      document.getElementById('resCalories').innerText = `${targetCalories} kcal`;
+      document.getElementById('resProtein').innerText = `${targetProtein}g`;
+      document.getElementById('resCarbs').innerText = `${targetCarbs}g`;
+      document.getElementById('resFats').innerText = `${targetFats}g`;
+
+      // Recommended Stacks
+      const stackContainer = document.getElementById('recommendedStackContent');
+      if (currentGoal === 'cut') {
+        stackContainer.innerHTML = `
+          <div>• <strong>Muscle & Strength 100% Bio-Whey Isolate</strong> (फास्ट लीन रिकवरी)</div>
+          <div>• <strong>Shred-X Thermo Fat Burner / L-Carnitine</strong></div>
+          <div>• <strong>डेली शेक बार 26-डे लीन पास</strong></div>
+        `;
+      } else if (currentGoal === 'bulk') {
+        stackContainer.innerHTML = `
+          <div>• <strong>Muscle & Strength Ultra Mega Mass Gainer</strong> (कैलोरी सरप्लस)</div>
+          <div>• <strong>Micronized Creapure Creatine</strong> (पावर और स्ट्रेंथ के लिए)</div>
+          <div>• <strong>द मसल बीस्ट हाई-कैलोरी शेक पास</strong></div>
+        `;
+      } else {
+        stackContainer.innerHTML = `
+          <div>• <strong>Muscle & Strength 100% Whey</strong> + <strong>Creapure Creatine</strong></div>
+          <div>• <strong>Pro BCAA + EAA Intra-Workout</strong></div>
+          <div>• <strong>डेली फ्रेश प्रोटीन स्मूदी पास</strong></div>
+        `;
+      }
+
+      document.getElementById('calcResultBox').classList.remove('hidden');
+    }
+
+    // 9. DIET TIMETABLE & HYDRATION TRACKER
+    function addWater(ml) {
+      waterConsumedMl += ml;
+      if (waterConsumedMl > 3500) waterConsumedMl = 3500;
+      updateWaterUI();
+    }
+    function resetWater() {
+      waterConsumedMl = 0;
+      updateWaterUI();
+    }
+    function updateWaterUI() {
+      const ltr = (waterConsumedMl / 1000).toFixed(1);
+      document.getElementById('waterCountText').innerText = `${ltr} / 3.5 Litre`;
+      const pct = Math.min(100, Math.round((waterConsumedMl / 3500) * 100));
+      document.getElementById('waterProgressBar').style.width = `${pct}%`;
+      localStorage.setItem('msi_water', waterConsumedMl);
+    }
+
+    function switchDietType(type) {
+      currentDietType = type;
+      if (type === 'veg') {
+        document.getElementById('diet-veg-btn').className = "px-2.5 py-1 rounded bg-emerald-600 text-white font-bold";
+        document.getElementById('diet-nonveg-btn').className = "px-2.5 py-1 rounded bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold";
+      } else {
+        document.getElementById('diet-nonveg-btn').className = "px-2.5 py-1 rounded bg-emerald-600 text-white font-bold";
+        document.getElementById('diet-veg-btn').className = "px-2.5 py-1 rounded bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold";
+      }
+      renderDietPlan();
+    }
+
+    function renderDietPlan() {
+      const container = document.getElementById('dietPlanContainer');
+      if (currentDietType === 'veg') {
+        container.innerHTML = `
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-gold-500">
+            <strong>सुबह का नाश्ता (8:00 AM):</strong> ओट्स (60g) + स्किम्ड मिल्क + 1 स्कूप Muscle & Strength Whey + 10 बादाम
+          </div>
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-blue-500">
+            <strong>दोपहर का खाना (1:30 PM):</strong> 150g पनीर भुर्जी / सोया चंक्स + 2 रोटी / ब्राउन राइस + हरी सब्जी और सलाद
+          </div>
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-emerald-500">
+            <strong>प्री-वर्कआउट (5:30 PM):</strong> 2 केले / ब्राउन ब्रेड पीनट बटर + Muscle & Strength प्री-वर्कआउट
+          </div>
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-amber-500">
+            <strong>पोस्ट-वर्कआउट (7:30 PM):</strong> स्टोर पर फ्रेश 26g प्रोटीन शेक या 1 स्कूप बायो-व्हे आइसोलेट पानी में
+          </div>
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-purple-500">
+            <strong>रात का भोजन (9:30 PM):</strong> मूंग दाल का चीला या उबले चने का सलाद + 1 ग्लास हल्दी वाला गर्म दूध
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-gold-500">
+            <strong>सुबह का नाश्ता (8:00 AM):</strong> 4 उबले अंडे (3 व्हाइट + 1 होल) + ओट्स + 1 सेब
+          </div>
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-blue-500">
+            <strong>दोपहर का खाना (1:30 PM):</strong> 150g ग्रिल्ड चिकन ब्रेस्ट + 1 कप उबले चावल + खीरा व दाल
+          </div>
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-emerald-500">
+            <strong>प्री-वर्कआउट (5:30 PM):</strong> ब्लैक कॉफी या नाइट्रिक प्री-वर्कआउट + 1 उबला आलू / केला
+          </div>
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-amber-500">
+            <strong>पोस्ट-वर्कआउट (7:30 PM):</strong> Muscle & Strength India Isolate Shake + 1 स्कूप Creapure Creatine
+          </div>
+          <div class="p-2.5 rounded bg-gray-50 dark:bg-neutral-800 border-l-4 border-purple-500">
+            <strong>रात का भोजन (9:30 PM):</strong> फिश / चिकन या 4 एग व्हाइट्स भुर्जी + मिक्स वेज सलाद
+          </div>
+        `;
+      }
+    }
+
+    // 10. ARENA MODAL & FORM
+    function openArenaModal() {
+      document.getElementById('arenaModal').classList.remove('hidden');
+    }
+    function closeArenaModal() {
+      document.getElementById('arenaModal').classList.add('hidden');
+    }
+    function handleArenaRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('arenaName').value;
+      const phone = document.getElementById('arenaPhone').value;
+      const eventName = document.getElementById('arenaEvent').value;
+      const insta = document.getElementById('arenaInsta').value || 'N/A';
+
+      const msg = `🔥 *Muscle & Strength India Arena Registration*\nनाम: ${name}\nफ़ोन: ${phone}\nइवेंट: ${eventName}\nInsta: ${insta}`;
+      window.open(`https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+      closeArenaModal();
+      alert("रजिस्ट्रेशन सफल! आपका एथलीट पास WhatsApp पर कन्फर्म हो गया है।");
+    }
+
+    // 11. ADMIN DASHBOARD (PIN PROTECTED)
+    function openAdminPrompt() {
+      const pin = prompt("स्टोर एडमिन पिन दर्ज करें (Default: 1122):");
+      if (pin === "1122") {
+        document.getElementById('adminModal').classList.remove('hidden');
+        renderAdminStock();
+      } else if (pin) {
+        alert("गलत पिन! केवल ऑथराइज्ड स्टोर ओनर के लिए।");
+      }
+    }
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+    }
+
+    function renderAdminStock() {
+      const list = document.getElementById('adminStockList');
+      list.innerHTML = '';
+      products.forEach((p, idx) => {
+        const row = document.createElement('div');
+        row.className = "flex items-center justify-between p-2 rounded bg-gray-100 dark:bg-gray-800 text-xs";
+        row.innerHTML = `
+          <div>
+            <strong>${p.name}</strong> (₹${p.price})
+            <span class="block text-[10px] text-gray-500">Status: ${p.inStock ? 'In Stock' : 'Out of Stock'}</span>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="toggleStock(${idx})" class="px-2 py-1 bg-amber-500 text-black font-bold rounded text-[10px]">स्टॉक बदलें</button>
+            <button onclick="deleteProduct(${idx})" class="px-2 py-1 bg-rose-600 text-white font-bold rounded text-[10px]">हटाएं</button>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function toggleStock(idx) {
+      products[idx].inStock = !products[idx].inStock;
+      localStorage.setItem('msi_products', JSON.stringify(products));
+      renderAdminStock();
+      renderProducts();
+    }
+
+    function deleteProduct(idx) {
+      if (confirm("क्या आप वाकई इस सप्लीमेंट को हटाना चाहते हैं?")) {
+        products.splice(idx, 1);
+        localStorage.setItem('msi_products', JSON.stringify(products));
+        renderAdminStock();
+        renderProducts();
+      }
+    }
+
+    function handleAdminAddProduct(e) {
+      e.preventDefault();
+      const name = document.getElementById('admProdName').value;
+      const category = document.getElementById('admCategory').value;
+      const price = parseFloat(document.getElementById('admPrice').value);
+      const mrp = parseFloat(document.getElementById('admMrp').value);
+      const sizesStr = document.getElementById('admSizes').value || "1 kg, 2 kg";
+
+      const newProd = {
+        id: "msi-" + Date.now(),
+        name: "Muscle & Strength India - " + name,
+        category,
+        sizes: sizesStr.split(',').map(s => s.trim()),
+        flavors: ["Chocolate", "Malai Kulfi"],
+        price,
+        mrp,
+        inStock: true,
+        tag: "New Arrival"
+      };
+
+      products.unshift(newProd);
+      localStorage.setItem('msi_products', JSON.stringify(products));
+      renderAdminStock();
+      renderProducts();
+      e.target.reset();
+      alert("नया सप्लीमेंट सफलतापूर्वक स्टोर पर लाइव हो गया!");
+    }
+
+    // ON LOAD INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderProducts();
+      renderShakeMenu();
+      renderDietPlan();
+      updateCartUI();
+      updateWaterUI();
+    });
+  </script>
+</body>
+</html>
